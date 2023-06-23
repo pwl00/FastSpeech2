@@ -10,7 +10,7 @@ from text import cmudict, pinyin
 _pad = "_"
 _punctuation = "!'(),.:;? "
 _special = "-"
-_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZĄĆĘŁŃÓŚŹŻŁabcdefghijklmnopqrstuvwxyząćęłńóśźżł"
 _silences = ["@sp", "@spn", "@sil"]
 
 # Prepend "@" to ARPAbet symbols to ensure uniqueness (some are the same as uppercase letters):
