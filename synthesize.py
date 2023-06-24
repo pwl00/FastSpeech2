@@ -41,9 +41,34 @@ def preprocess_english(text, preprocess_config):
             phones += lexicon[w.lower()]
         else:
             phones += list(filter(lambda p: p != " ", g2p(w)))
+    print(phones)
     phones = "{" + "}{".join(phones) + "}"
+    print(phones)
     phones = re.sub(r"\{[^\w\s]?\}", "{sp}", phones)
+    print(phones)
     phones = phones.replace("}{", " ")
+    print(phones)
+
+    print("Raw Text Sequence: {}".format(text))
+    print("Phoneme Sequence: {}".format(phones))
+    sequence = np.array(
+        text_to_sequence(
+            phones, preprocess_config["preprocessing"]["text"]["text_cleaners"]
+        )
+    )
+
+    return np.array(sequence)
+
+def preprocess_any(text, preprocess_config):
+
+    phones = text.split(" ")
+    print(phones)
+    phones = "{" + "}{".join(phones) + "}"
+    print(phones)
+    phones = re.sub(r"\{[!'(),.:;?]\}", "{sp}", phones)
+    print(phones)
+    phones = phones.replace("}{", " ")
+    print(phones)
 
     print("Raw Text Sequence: {}".format(text))
     print("Phoneme Sequence: {}".format(phones))
@@ -132,6 +157,12 @@ if __name__ == "__main__":
         help="raw text to synthesize, for single-sentence mode only",
     )
     parser.add_argument(
+        "--phones",
+        type=str,
+        default=None,
+        help="raw text to synthesize, for single-sentence mode only",
+    )
+    parser.add_argument(
         "--speaker_id",
         type=int,
         default=0,
@@ -206,7 +237,10 @@ if __name__ == "__main__":
             texts = np.array([preprocess_english(args.text, preprocess_config)])
         elif preprocess_config["preprocessing"]["text"]["language"] == "zh":
             texts = np.array([preprocess_mandarin(args.text, preprocess_config)])
+        elif preprocess_config["preprocessing"]["text"]["language"] == "pl":
+            texts = np.array([preprocess_any(args.phones, preprocess_config)])
         text_lens = np.array([len(texts[0])])
+        print(texts)
         batchs = [(ids, raw_texts, speakers, texts, text_lens, max(text_lens))]
 
     control_values = args.pitch_control, args.energy_control, args.duration_control
