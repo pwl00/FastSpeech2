@@ -241,6 +241,7 @@ if __name__ == "__main__":
             texts = np.array([preprocess_any(args.phones, preprocess_config)])
         text_lens = np.array([len(texts[0])])
         print(texts)
+        print(bytes(texts))
         batchs = [(ids, raw_texts, speakers, texts, text_lens, max(text_lens))]
 
     control_values = args.pitch_control, args.energy_control, args.duration_control
