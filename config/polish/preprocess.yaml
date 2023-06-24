@@ -1,7 +1,7 @@
 dataset: "LJSpeech"
 
 path:
-  corpus_path: "/sampledata"
+  corpus_path: "/content"
   lexicon_path: "lexicon/polish-lexicon.txt"
   raw_path: "./raw_data/polish"
   preprocessed_path: "./preprocessed_data/polish"
